@@ -63,17 +63,17 @@
         </div>
         <div class="form">
           <div class="formContent">
-            <form action="" method="POST">
-              <input class="form-control form-control-lg" type="text" placeholder="Adicione o título da tarefa"><br>
-              <input class="form-control form-control-lg" type="text" placeholder="Adicione a descrição da tarefa"><br>
-              <select class="form-select form-select-lg mb-3" aria-label="Large select example">
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+            <form action="{% url 'inserirTarefa' %}" method="POST">{% csrf_token %}
+              <input class="form-control form-control-lg" type="text" name="titulo" placeholder="Adicione o título da tarefa"><br>
+              <input class="form-control form-control-lg" type="text" name="descricao" placeholder="Adicione a descrição da tarefa"><br>
+              <select class="form-select form-select-lg mb-3" name="situacao" aria-label="Large select example">
+                <option selected>Selecione</option>
+                <option value="1">A Fazer</option>
+                <option value="2">Fazendo</option>
+                <option value="3">Feito</option>
               </select><br>
               <div class="btn">
-                <button type="submit" class="btn btn-success">Adicionar tarefa</button>
+                <input type="submit" class="btn btn-success" />
               </div>
             </form>
           </div>

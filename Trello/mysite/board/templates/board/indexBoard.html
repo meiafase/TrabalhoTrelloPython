@@ -70,60 +70,90 @@
         }
     </style>
 </head>
-<body>
+<body onload="myFunction()">
     <div class="global">
         <div class="content">
             <div class="title">
-                <h1>Board do Samuel</h1>
+                <h1>Board do {{ nome }}</h1>
             </div>
 
             <div class="addTarefa">
-                <a type="button" href="inserirTarefa" class="btn btn-success">Adicionar Tarefa</a>
+                <a type="button" href="{% url 'inserirTarefa' %}" class="btn btn-success">Adicionar Tarefa</a>
             </div>
 
             <div class="boards">
                 <div class="board boardAfazer">
                     <h1>A Fazer</h1>
                     <hr>
-                    <div class="card" style="width: 100%; margin-top: 10px;">
-                      <div class="card-body">
-                        <h5 class="card-title">Titulo tarefa</h5>
-                        <p class="card-text">descrição da tarefa descrição da tarefa descrição da tarefa descrição da tarefa descrição da tarefa</p>
-                        <a href="editarTarefa" class="btn btn-primary">Editar Tafera</a>
-                      </div>
+                    {% for tarefa in tarefasUsuario %}
+                        {% if tarefa.situacao == 1 %}
+                            <div class="card" style="width: 100%; margin-top: 10px;" draggable="true">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ tarefa.titulo }}</h5>
+                                    <p class="card-text">{{ tarefa.descricao }}</p>
+                                    <a href="{% url 'editarTarefa' tarefa.idTarefa %}" class="btn btn-primary">Editar Tarefa</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% empty %}
+                        <p>Nenhuma tarefa encontrada.</p>
+                    {% endfor %}
                     </div>
-                    <div class="card" style="width: 100%; margin-top: 10px;">
-                      <div class="card-body">
-                        <h5 class="card-title">Titulo tarefa</h5>
-                        <p class="card-text">descrição da tarefa descrição da tarefa descrição da tarefa descrição da tarefa descrição da tarefa</p>
-                        <a href="editarTarefa" class="btn btn-primary">Editar Tafera</a>
-                      </div>
-                    </div>
-                </div>
                 <div class="board boardFazendo">
                     <h1>Fazendo</h1>
                     <hr>
-                    <div class="card" style="width: 100%; margin-top: 10px;">
-                      <div class="card-body">
-                        <h5 class="card-title">Titulo tarefa</h5>
-                        <p class="card-text">descrição da tarefa descrição da tarefa descrição da tarefa descrição da tarefa descrição da tarefa</p>
-                        <a href="#" class="btn btn-primary">Editar Tafera</a>
-                      </div>
-                    </div>
                 </div>
                 <div class="board boardFeito">
                     <h1>Feito</h1>
                     <hr>
-                    <div class="card" style="width: 100%; margin-top: 10px;">
-                      <div class="card-body">
-                        <h5 class="card-title">Titulo tarefa</h5>
-                        <p class="card-text">descrição da tarefa descrição da tarefa descrição da tarefa descrição da tarefa descrição da tarefa</p>
-                        <a href="#" class="btn btn-primary">Editar Tafera</a>
-                      </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        const boards = document.querySelectorAll(".boards");
+
+        function myFunction() {
+            boards.forEach((container) => {
+                const card = container.querySelectorAll(".card");
+                card.forEach((textarea) => {
+                    if (textarea) {
+                        textarea.id = Math.random() * 100;
+                        textarea.addEventListener("dragstart", onDragStart);
+                        textarea.addEventListener("dragend", onDragEnd);
+                        const containerId = container.id;
+
+                        const targetContainer = document.querySelector(`#${containerId}`);
+                        if (targetContainer) targetContainer.appendChild(textarea);
+                    }
+                });
+            });
+        }
+
+        function onDragEnd(e) {
+            e.target.classList.remove("drag");
+        }
+
+        function onDragStart(e) {
+            e.dataTransfer.setData("text", e.target.id);
+            e.target.classList.add("drag");
+        }
+
+        boards.forEach((container) => {
+            container.addEventListener("dragover", function (e) {
+                e.preventDefault();
+            });
+        });
+
+        boards.forEach((container) => {
+            container.addEventListener("drop", function (e) {
+                e.preventDefault();
+                const textareaID = e.dataTransfer.getData("text");
+                e.target.appendChild(document.getElementById(textareaID));
+            });
+        });
+
+    </script>
 </body>
 </html>

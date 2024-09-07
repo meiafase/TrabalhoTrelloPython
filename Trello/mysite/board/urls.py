@@ -4,5 +4,5 @@ from . import views
 urlpatterns = [
     path('', views.boardHome, name="boardHome"),
     path('inserirTarefa/', views.inserirTarefa, name="inserirTarefa"),
-    path('editarTarefa/', views.editarTarefa, name="editarTarefa")
+    path('editarTarefa/<int:id>/', views.editarTarefa, name="editarTarefa"),
 ]
