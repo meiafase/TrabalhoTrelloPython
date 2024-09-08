@@ -78,7 +78,7 @@
             </div>
 
             <div class="addTarefa">
-                <a type="button" href="{% url 'inserirTarefa' %}" class="btn btn-success">Adicionar Tarefa</a>
+                <a type="button" href="{% url 'inserirTarefa' idUsuario %}" class="btn btn-success">Adicionar Tarefa</a>
             </div>
 
             <div class="boards">
@@ -98,14 +98,41 @@
                     {% empty %}
                         <p>Nenhuma tarefa encontrada.</p>
                     {% endfor %}
-                    </div>
+                </div>
+
                 <div class="board boardFazendo">
                     <h1>Fazendo</h1>
                     <hr>
+                    {% for tarefa in tarefasUsuario %}
+                        {% if tarefa.situacao == 2 %}
+                            <div class="card" style="width: 100%; margin-top: 10px;" draggable="true">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ tarefa.titulo }}</h5>
+                                    <p class="card-text">{{ tarefa.descricao }}</p>
+                                    <a href="{% url 'editarTarefa' tarefa.idTarefa %}" class="btn btn-primary">Editar Tarefa</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% empty %}
+                        <p>Nenhuma tarefa encontrada.</p>
+                    {% endfor %}
                 </div>
                 <div class="board boardFeito">
                     <h1>Feito</h1>
                     <hr>
+                    {% for tarefa in tarefasUsuario %}
+                        {% if tarefa.situacao == 3 %}
+                            <div class="card" style="width: 100%; margin-top: 10px;" draggable="true">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ tarefa.titulo }}</h5>
+                                    <p class="card-text">{{ tarefa.descricao }}</p>
+                                    <a href="{% url 'editarTarefa' tarefa.idTarefa %}" class="btn btn-primary">Editar Tarefa</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% empty %}
+                        <p>Nenhuma tarefa encontrada.</p>
+                    {% endfor %}
                 </div>
             </div>
         </div>

@@ -63,12 +63,12 @@
         </div>
         <div class="form">
           <div class="formContent">
-            <form action="{% url 'inserirTarefa' %}" method="POST">{% csrf_token %}
+            <form action="{% url 'inserirTarefa' idUsuario %}" method="POST">{% csrf_token %}
               <input class="form-control form-control-lg" type="text" name="titulo" placeholder="Adicione o título da tarefa"><br>
               <input class="form-control form-control-lg" type="text" name="descricao" placeholder="Adicione a descrição da tarefa"><br>
               <select class="form-select form-select-lg mb-3" name="situacao" aria-label="Large select example">
                 <option selected>Selecione</option>
-                <option value="1">A Fazer</option>
+                <option value="1">A Fazer</option> 
                 <option value="2">Fazendo</option>
                 <option value="3">Feito</option>
               </select><br>
