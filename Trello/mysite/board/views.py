@@ -58,3 +58,23 @@ def editarTarefa(request, idTarefa):
 
     else:
         return render(request, 'board/editarTarefa.html', {'tarefa': tarefa})
+
+
+
+def excluirTarefa(request, idTarefa):
+    tarefa = get_object_or_404(Tarefas, idTarefa=idTarefa)
+    idUsuario = tarefa.idUsuario.idUsuario
+
+    if request.method == "GET":
+        tarefa.delete()
+
+        usuario = get_object_or_404(Usuario, idUsuario=idUsuario)
+        tarefasUsuario = Tarefas.objects.filter(idUsuario=usuario)
+
+        print (tarefa.idUsuario.nome)
+        return render(request, 'board/indexBoard.html', {
+            'nome': tarefa.idUsuario.nome, 
+            'tarefasUsuario': tarefasUsuario, 
+            'idUsuario': idUsuario
+        })
+    

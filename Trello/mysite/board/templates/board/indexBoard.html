@@ -92,6 +92,7 @@
                                     <h5 class="card-title">{{ tarefa.titulo }}</h5>
                                     <p class="card-text">{{ tarefa.descricao }}</p>
                                     <a href="{% url 'editarTarefa' tarefa.idTarefa %}" class="btn btn-primary">Editar Tarefa</a>
+                                    <a href="{% url 'excluirTarefa' tarefa.idTarefa %}" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta tarefa?')">Excluir</a>
                                 </div>
                             </div>
                         {% endif %}
@@ -110,6 +111,7 @@
                                     <h5 class="card-title">{{ tarefa.titulo }}</h5>
                                     <p class="card-text">{{ tarefa.descricao }}</p>
                                     <a href="{% url 'editarTarefa' tarefa.idTarefa %}" class="btn btn-primary">Editar Tarefa</a>
+                                    <a href="{% url 'excluirTarefa' tarefa.idTarefa %}" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta tarefa?')">Excluir</a>
                                 </div>
                             </div>
                         {% endif %}
@@ -127,6 +129,7 @@
                                     <h5 class="card-title">{{ tarefa.titulo }}</h5>
                                     <p class="card-text">{{ tarefa.descricao }}</p>
                                     <a href="{% url 'editarTarefa' tarefa.idTarefa %}" class="btn btn-primary">Editar Tarefa</a>
+                                    <a href="{% url 'excluirTarefa' tarefa.idTarefa %}" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta tarefa?')">Excluir</a>
                                 </div>
                             </div>
                         {% endif %}
