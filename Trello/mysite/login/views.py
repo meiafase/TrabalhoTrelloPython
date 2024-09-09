@@ -11,10 +11,8 @@ def login(request):
         logar = Usuario.objects.filter(email=email, senha=senha)
         if logar:
             tarefasUsuario = Tarefas.objects.filter(idUsuario=logar[0].idUsuario)
-            print(tarefasUsuario)
             return render(request, 'board/indexBoard.html', {'nome': logar[0].nome, 'tarefasUsuario': tarefasUsuario, 'idUsuario': logar[0].idUsuario})
         else:
-            print('Deu merda')
-        return render(request, 'login/login.html')
+            return render(request, 'login/login.html')
     else:
         return render(request, 'login/login.html')

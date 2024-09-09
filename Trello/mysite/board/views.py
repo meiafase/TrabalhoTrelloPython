@@ -1,4 +1,5 @@
-from django.http import HttpResponse
+import json
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from . models import Tarefas, Usuario
 
@@ -39,7 +40,6 @@ def editarTarefa(request, idTarefa):
         descricao = request.POST.get('descricao', tarefa.descricao)
         situacao = int(request.POST.get('situacao', tarefa.situacao))
         
-        # Atualiza e salva os dados da tarefa
         tarefa.titulo = titulo
         tarefa.descricao = descricao
         tarefa.situacao = situacao
@@ -55,7 +55,24 @@ def editarTarefa(request, idTarefa):
             'tarefasUsuario': tarefasUsuario, 
             'idUsuario': idUsuario
         })
+    
+    elif request.method == "PUT": 
+        data = json.loads(request.body)
+        novo_estado = data.get('newBoardId')
+        situacao = 1
+        if (novo_estado == 'boardFeito'):
+            situacao = 3
+        elif novo_estado == 'boardFazendo':
+            situacao = 2
+        elif novo_estado == "boardAfazer":
+            situacao = 1
 
+        tarefa = Tarefas.objects.get(idTarefa=idTarefa)
+
+        tarefa.situacao = situacao
+        tarefa.save()
+        
+        return JsonResponse({'status': 'success'}, status=200)
     else:
         return render(request, 'board/editarTarefa.html', {'tarefa': tarefa})
 
