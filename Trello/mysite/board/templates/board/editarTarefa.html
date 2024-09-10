@@ -70,6 +70,11 @@
                 <option value="1" {% if tarefa.situacao == 1 %}selected{% endif %}>A Fazer</option>
                 <option value="2" {% if tarefa.situacao == 2 %}selected{% endif %}>Fazendo</option>
                 <option value="3" {% if tarefa.situacao == 3 %}selected{% endif %}>Feito</option>
+              </select>
+              <select class="form-select form-select-lg mb-3" name="responsavel" aria-label="Large select example">
+                {% for usuario in usuarios %}
+                  <option value="{{ usuario.idUsuario }}" {% if usuario.idUsuario == usuarioNow.idUsuario %}selected{% endif %}>{{ usuario.nome }}</option>
+                {% endfor %}
               </select><br>
               <div class="btn">
                 <input type="submit" class="btn btn-success" />

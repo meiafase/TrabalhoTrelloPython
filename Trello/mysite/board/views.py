@@ -47,6 +47,10 @@ def inserirTarefa(request, idUsuario):
 def editarTarefa(request, idTarefa):
     id_usuario = request.session.get('idUsuario', False)
 
+    usuarios = Usuario.objects.all()
+
+    usuario = Usuario.objects.get(idUsuario=id_usuario)
+
     if (id_usuario):
         tarefa = get_object_or_404(Tarefas, idTarefa=idTarefa)
 
@@ -54,10 +58,14 @@ def editarTarefa(request, idTarefa):
             titulo = request.POST.get('titulo', tarefa.titulo)
             descricao = request.POST.get('descricao', tarefa.descricao)
             situacao = int(request.POST.get('situacao', tarefa.situacao))
+            responsavel = int(request.POST.get('responsavel', tarefa.idUsuario))
+
+            novoResponsavel = Usuario.objects.get(idUsuario=responsavel)
             
             tarefa.titulo = titulo
             tarefa.descricao = descricao
             tarefa.situacao = situacao
+            tarefa.idUsuario = novoResponsavel
             tarefa.save()
 
             return redirect('http://127.0.0.1:8000/board')
@@ -79,7 +87,8 @@ def editarTarefa(request, idTarefa):
             
             return JsonResponse({'status': 'success'}, status=200)
         else:
-            return render(request, 'board/editarTarefa.html', {'tarefa': tarefa})
+            print(usuario)
+            return render(request, 'board/editarTarefa.html', {'tarefa': tarefa, 'usuarios': usuarios, "usuarioNow": usuario})
     else:
         return redirect('http://127.0.0.1:8000/')
 
