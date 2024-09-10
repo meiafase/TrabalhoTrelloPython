@@ -1,6 +1,5 @@
-from django.shortcuts import render
-
-from board.models import Usuario, Tarefas
+from django.shortcuts import redirect, render
+from board.models import Usuario
 
 
 def login(request):
@@ -8,11 +7,19 @@ def login(request):
         email = request.POST.get('email')
         senha = request.POST.get('senha')
 
-        logar = Usuario.objects.filter(email=email, senha=senha)
-        if logar:
-            tarefasUsuario = Tarefas.objects.filter(idUsuario=logar[0].idUsuario)
-            return render(request, 'board/indexBoard.html', {'nome': logar[0].nome, 'tarefasUsuario': tarefasUsuario, 'idUsuario': logar[0].idUsuario})
+        try:
+            usuario = Usuario.objects.get(email=email, senha=senha)
+        except Usuario.DoesNotExist:
+            return render(request, 'login/login.html')
+
+        request.session['idUsuario'] = usuario.idUsuario
+
+        return redirect('http://127.0.0.1:8000/board/')
+
+    else:
+        id_usuario = request.session.get('idUsuario', False)
+
+        if (id_usuario):
+            return redirect('http://127.0.0.1:8000/board/')
         else:
             return render(request, 'login/login.html')
-    else:
-        return render(request, 'login/login.html')

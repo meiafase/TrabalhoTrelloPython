@@ -42,6 +42,15 @@
             margin-bottom: 20px;
         }
 
+        .addTarefa a {
+            margin-right: 10px;
+        }
+
+        .addTarefa p {
+            margin-right: 50px;
+            color: white;
+        }
+
         .boards {
             width: 100%;
             height: calc(100% - 80px); /* Ajustar altura para compensar o cabeçalho e o espaçamento */
@@ -95,7 +104,9 @@
             </div>
 
             <div class="addTarefa">
+                <p>Você pode arrastar as tarefas entre os "Boards"</p>
                 <a href="{% url 'inserirTarefa' idUsuario %}" class="btn btn-success">Adicionar Tarefa</a>
+                <a href="{% url 'destruirSessao' %}" class="btn btn-danger">Logout</a>
             </div>
 
             <div class="boards">

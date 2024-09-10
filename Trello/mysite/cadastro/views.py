@@ -10,8 +10,6 @@ def cadastro(request):
         senha = request.POST.get('senha')
         confirmar_senha = request.POST.get('confirmarSenha')
 
-        print(usuario, email, senha, confirmar_senha)
-
         if Usuario.objects.filter(nome=usuario).exists():
             messages.error(request, 'O nome de usuário já está em uso.')
             return render(request, 'cadastro/IndexCadastro.html')
