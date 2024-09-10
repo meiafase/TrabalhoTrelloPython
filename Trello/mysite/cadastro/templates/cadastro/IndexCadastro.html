@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,7 @@
             margin: 0;
         }
         
-        .login-container {
+        .registration-container {
             background: white;
             padding: 2rem;
             border-radius: 8px;
@@ -65,22 +65,31 @@
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <form action="{% url 'cadastro' %}"  method="POST">{% csrf_token %}
-            <div class="form-group"></div>
+    <div class="registration-container">
+        <h2>Cadastro</h2>
+        <form action="{% url 'cadastro' %}" method="POST">{% csrf_token %}
+            
+            <div class="form-group">
                 <label>Usuário</label>
                 <input type="text" name="usuario" required>
             </div>
+            
             <div class="form-group">
                 <label>E-mail</label>
-                <input type="text" name="email" required>
+                <input type="email" name="email" required>
             </div>
+            
             <div class="form-group">
                 <label>Senha</label>
                 <input type="password" name="senha" required>
             </div>
-            <button type="submit">Entrar</button>
+            
+            <div class="form-group">
+                <label>Confirmar Senha</label>
+                <input type="password" name="confirmarSenha" required>
+            </div>
+            
+            <button type="submit">Cadastrar</button>
         </form>
     </div>
 </body>
